@@ -1,0 +1,12 @@
+D:\Projects\.NET Core\PizzaMaster_WebApp\FE_PizzaMaster\PizzaMaster.Domain\bin\Debug\net6.0\PizzaMaster.Domain.deps.json
+D:\Projects\.NET Core\PizzaMaster_WebApp\FE_PizzaMaster\PizzaMaster.Domain\bin\Debug\net6.0\PizzaMaster.Domain.dll
+D:\Projects\.NET Core\PizzaMaster_WebApp\FE_PizzaMaster\PizzaMaster.Domain\bin\Debug\net6.0\PizzaMaster.Domain.pdb
+D:\Projects\.NET Core\PizzaMaster_WebApp\FE_PizzaMaster\PizzaMaster.Domain\obj\Debug\net6.0\PizzaMaster.Domain.csproj.AssemblyReference.cache
+D:\Projects\.NET Core\PizzaMaster_WebApp\FE_PizzaMaster\PizzaMaster.Domain\obj\Debug\net6.0\PizzaMaster.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\.NET Core\PizzaMaster_WebApp\FE_PizzaMaster\PizzaMaster.Domain\obj\Debug\net6.0\PizzaMaster.Domain.AssemblyInfoInputs.cache
+D:\Projects\.NET Core\PizzaMaster_WebApp\FE_PizzaMaster\PizzaMaster.Domain\obj\Debug\net6.0\PizzaMaster.Domain.AssemblyInfo.cs
+D:\Projects\.NET Core\PizzaMaster_WebApp\FE_PizzaMaster\PizzaMaster.Domain\obj\Debug\net6.0\PizzaMaster.Domain.csproj.CoreCompileInputs.cache
+D:\Projects\.NET Core\PizzaMaster_WebApp\FE_PizzaMaster\PizzaMaster.Domain\obj\Debug\net6.0\PizzaMaster.Domain.dll
+D:\Projects\.NET Core\PizzaMaster_WebApp\FE_PizzaMaster\PizzaMaster.Domain\obj\Debug\net6.0\refint\PizzaMaster.Domain.dll
+D:\Projects\.NET Core\PizzaMaster_WebApp\FE_PizzaMaster\PizzaMaster.Domain\obj\Debug\net6.0\PizzaMaster.Domain.pdb
+D:\Projects\.NET Core\PizzaMaster_WebApp\FE_PizzaMaster\PizzaMaster.Domain\obj\Debug\net6.0\ref\PizzaMaster.Domain.dll

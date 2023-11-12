@@ -1,0 +1,100 @@
+﻿@model IEnumerable<PizzaMaster.Domain.ViewModels.RestoranViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container p-3">
+    <div class="row p-4">
+        <div class="col-6">
+            <h2 class="text-primary">Restoran List</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-circle"></i> &nbsp; Create New</a>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RestoranIme)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateFrom)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RestoranIme)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateFrom)
+                    </td>
+                    <td class="row">
+
+                        <a asp-action="Edit" class="col-md-3 btn btn-success" asp-route-id="@item.Id">
+                            <i class="bi bi-pen"></i>
+                            <br>
+                            Edit
+                        </a>
+                        &nbsp;
+                        <a asp-action="Details" class="col-md-3 btn btn-primary" asp-route-id="@item.Id">
+                            <i class="bi bi-ui-checks-grid"></i>
+                            Details
+                        </a>
+                        &nbsp;
+                        <a asp-action="Delete" class="col-md-3 btn btn-danger" asp-route-id="@item.Id">
+                            <i class="bi bi-trash3"></i>
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <table class="table table-bordered table-striped" style="width:100%" id="yourDataTableId">
+        <thead>
+            <tr>
+                <th>Column 1</th>
+                <th>Column 2</th>
+                <!-- Add more columns as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Data 1</td>
+                <td>Data 2</td>
+                <!-- Add more rows and data as needed -->
+            </tr>
+        </tbody>
+    </table>
+
+
+</div>
+
+
+@section Scripts
+{
+@*    <script src="~/js/product/product.js"></script>
+*@
+
+
+    <script>
+        $(document).ready(function () {
+            $('#yourDataTableId').DataTable(); // Replace 'yourDataTableId' with the actual ID of your table
+        });
+    </script>
+}
