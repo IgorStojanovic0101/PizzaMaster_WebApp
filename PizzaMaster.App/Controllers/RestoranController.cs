@@ -1,6 +1,8 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NuGet.Common;
+using PizzaMaster.Application.Services;
 using PizzaMaster.Domain.ViewModels;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -10,8 +12,13 @@ namespace PizzaMaster.App.Controllers
     public class RestoranController : Controller
     {
         private readonly INotyfService _notyfService;
-        public RestoranController(INotyfService notyfService)
+        private readonly ISomeService _Service;
+        private readonly ILogger<RestoranController> _logger;
+
+        public RestoranController(ILogger<RestoranController> logger,INotyfService notyfService,ISomeService Service)
         {
+            _logger = logger;
+            _Service = Service;
             _notyfService = notyfService;
         }
 
@@ -24,6 +31,13 @@ namespace PizzaMaster.App.Controllers
             _notyfService.Error("Exception...");
             _notyfService.Warning("Warning...");
             _notyfService.Information("Welcome to CoreSpider.", 5);
+
+
+            _logger.LogInformation("Doing something in service instance:" + _Service.DoSomething());
+
+
+           // _scopedService.DoSomething();
+
             return View(list);
         }
 
@@ -111,10 +125,7 @@ namespace PizzaMaster.App.Controllers
         // GET: Categories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+          
 
 
 

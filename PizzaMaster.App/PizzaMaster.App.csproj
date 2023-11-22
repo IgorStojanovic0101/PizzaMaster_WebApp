@@ -15,7 +15,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\PizzaMaster_WebAPI\PizzaMaster_NetCore\PizzaMaster.Shared\PizzaMaster.Shared.csproj" />
+    <ProjectReference Include="..\PizzaMaster.Application\PizzaMaster.Application.csproj" />
     <ProjectReference Include="..\PizzaMaster.Domain\PizzaMaster.Domain.csproj" />
+    <ProjectReference Include="..\PizzaMaster.Infrastructure\PizzaMaster.Infrastructure.csproj" />
+    <ProjectReference Include="..\PizzaMaster.SomeService\PizzaMaster.BusinessLogic.csproj" />
   </ItemGroup>
 
 </Project>

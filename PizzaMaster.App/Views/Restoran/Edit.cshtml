@@ -4,30 +4,35 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1 class="mt-4">Edit</h1>
 
-<h4>Category</h4>
+<h4>Edit Restoran</h4>
 <hr />
+
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+
             <div class="form-group">
-                <label asp-for="RestoranIme" class="control-label"></label>
+                <label asp-for="RestoranIme" class="control-label">Restaurant Name</label>
                 <input asp-for="RestoranIme" class="form-control" />
                 <span asp-validation-for="RestoranIme" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="DateFrom" class="control-label"></label>
-                <input asp-for="DateFrom" class="form-control" />
+                <label asp-for="DateFrom" class="control-label">Start Date</label>
+                <input asp-for="DateFrom" class="form-control" type="date" />
                 <span asp-validation-for="DateFrom" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="DateTo" class="control-label"></label>
-                <input asp-for="DateTo" class="form-control" />
+                <label asp-for="DateTo" class="control-label">End Date</label>
+                <input asp-for="DateTo" class="form-control" type="date" />
                 <span asp-validation-for="DateTo" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -35,8 +40,8 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="mt-2">
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </div>
 
 @section Scripts {

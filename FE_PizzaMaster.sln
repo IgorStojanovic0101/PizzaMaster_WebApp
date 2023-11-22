@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaMaster.App", "PizzaMaster.App\PizzaMaster.App.csproj", "{C373D4A9-6E84-4082-9059-622FC840A682}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaMaster.App", "PizzaMaster.App\PizzaMaster.App.csproj", "{C373D4A9-6E84-4082-9059-622FC840A682}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Presentation", "5. Presentation", "{E92CAC30-7D96-4020-B96E-35CCE64B7A4A}"
 EndProject
@@ -19,7 +19,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Infrastructure", "3. Inf
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Persistence", "4. Persistence", "{AE35206E-F17A-4D9B-BE61-E990F412AAE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaMaster.Domain", "PizzaMaster.Domain\PizzaMaster.Domain.csproj", "{E556D576-7244-4E7A-8ECA-F73434879139}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaMaster.Domain", "PizzaMaster.Domain\PizzaMaster.Domain.csproj", "{E556D576-7244-4E7A-8ECA-F73434879139}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaMaster.Application", "PizzaMaster.Application\PizzaMaster.Application.csproj", "{BF565BE1-FBB8-4EA2-9E69-7025C9955A49}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaMaster.BusinessLogic", "PizzaMaster.SomeService\PizzaMaster.BusinessLogic.csproj", "{DB4756D5-0546-4DBE-BE1F-B0485DF549B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaMaster.Infrastructure", "PizzaMaster.Infrastructure\PizzaMaster.Infrastructure.csproj", "{89121048-A49C-4735-9ADB-182F64F07B98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +45,18 @@ Global
 		{E556D576-7244-4E7A-8ECA-F73434879139}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E556D576-7244-4E7A-8ECA-F73434879139}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E556D576-7244-4E7A-8ECA-F73434879139}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF565BE1-FBB8-4EA2-9E69-7025C9955A49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF565BE1-FBB8-4EA2-9E69-7025C9955A49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF565BE1-FBB8-4EA2-9E69-7025C9955A49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF565BE1-FBB8-4EA2-9E69-7025C9955A49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB4756D5-0546-4DBE-BE1F-B0485DF549B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB4756D5-0546-4DBE-BE1F-B0485DF549B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB4756D5-0546-4DBE-BE1F-B0485DF549B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB4756D5-0546-4DBE-BE1F-B0485DF549B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89121048-A49C-4735-9ADB-182F64F07B98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89121048-A49C-4735-9ADB-182F64F07B98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89121048-A49C-4735-9ADB-182F64F07B98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89121048-A49C-4735-9ADB-182F64F07B98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,6 +65,9 @@ Global
 		{C373D4A9-6E84-4082-9059-622FC840A682} = {E92CAC30-7D96-4020-B96E-35CCE64B7A4A}
 		{8B2340C0-2A47-41FB-91D6-430144993C42} = {F6D6E5FD-BB7E-408C-9864-C5064217D6B3}
 		{E556D576-7244-4E7A-8ECA-F73434879139} = {BF2F5380-1370-4607-999E-39D7925DDA63}
+		{BF565BE1-FBB8-4EA2-9E69-7025C9955A49} = {810D501C-89B5-4E8E-9F84-FD70F6FD228A}
+		{DB4756D5-0546-4DBE-BE1F-B0485DF549B4} = {AE35206E-F17A-4D9B-BE61-E990F412AAE3}
+		{89121048-A49C-4735-9ADB-182F64F07B98} = {F63D1798-7C15-4D82-8B74-70DACD39F302}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A2FBCF7F-B610-482E-A6E5-F1B7D13CA51D}
