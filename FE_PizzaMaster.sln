@@ -9,8 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Presentation", "5. Prese
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0. Shared", "0. Shared", "{F6D6E5FD-BB7E-408C-9864-C5064217D6B3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaMaster.Shared", "..\..\PizzaMaster_WebAPI\PizzaMaster_NetCore\PizzaMaster.Shared\PizzaMaster.Shared.csproj", "{8B2340C0-2A47-41FB-91D6-430144993C42}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Domain", "1. Domain", "{BF2F5380-1370-4607-999E-39D7925DDA63}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Application", "2. Application", "{810D501C-89B5-4E8E-9F84-FD70F6FD228A}"
@@ -25,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaMaster.Application", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaMaster.BusinessLogic", "PizzaMaster.SomeService\PizzaMaster.BusinessLogic.csproj", "{DB4756D5-0546-4DBE-BE1F-B0485DF549B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaMaster.Infrastructure", "PizzaMaster.Infrastructure\PizzaMaster.Infrastructure.csproj", "{89121048-A49C-4735-9ADB-182F64F07B98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaMaster.Infrastructure", "PizzaMaster.Infrastructure\PizzaMaster.Infrastructure.csproj", "{89121048-A49C-4735-9ADB-182F64F07B98}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaMaster.Shared", "..\..\PizzaMaster_WebAPI\New folder\PizzaMaster_NetCore\PizzaMaster.Shared\PizzaMaster.Shared.csproj", "{F9255B66-FC9B-4522-8EB3-D3A68F312889}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +37,6 @@ Global
 		{C373D4A9-6E84-4082-9059-622FC840A682}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C373D4A9-6E84-4082-9059-622FC840A682}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C373D4A9-6E84-4082-9059-622FC840A682}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8B2340C0-2A47-41FB-91D6-430144993C42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8B2340C0-2A47-41FB-91D6-430144993C42}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8B2340C0-2A47-41FB-91D6-430144993C42}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8B2340C0-2A47-41FB-91D6-430144993C42}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E556D576-7244-4E7A-8ECA-F73434879139}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E556D576-7244-4E7A-8ECA-F73434879139}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E556D576-7244-4E7A-8ECA-F73434879139}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -57,17 +53,21 @@ Global
 		{89121048-A49C-4735-9ADB-182F64F07B98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89121048-A49C-4735-9ADB-182F64F07B98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89121048-A49C-4735-9ADB-182F64F07B98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9255B66-FC9B-4522-8EB3-D3A68F312889}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9255B66-FC9B-4522-8EB3-D3A68F312889}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9255B66-FC9B-4522-8EB3-D3A68F312889}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9255B66-FC9B-4522-8EB3-D3A68F312889}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C373D4A9-6E84-4082-9059-622FC840A682} = {E92CAC30-7D96-4020-B96E-35CCE64B7A4A}
-		{8B2340C0-2A47-41FB-91D6-430144993C42} = {F6D6E5FD-BB7E-408C-9864-C5064217D6B3}
 		{E556D576-7244-4E7A-8ECA-F73434879139} = {BF2F5380-1370-4607-999E-39D7925DDA63}
 		{BF565BE1-FBB8-4EA2-9E69-7025C9955A49} = {810D501C-89B5-4E8E-9F84-FD70F6FD228A}
 		{DB4756D5-0546-4DBE-BE1F-B0485DF549B4} = {AE35206E-F17A-4D9B-BE61-E990F412AAE3}
 		{89121048-A49C-4735-9ADB-182F64F07B98} = {F63D1798-7C15-4D82-8B74-70DACD39F302}
+		{F9255B66-FC9B-4522-8EB3-D3A68F312889} = {F6D6E5FD-BB7E-408C-9864-C5064217D6B3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A2FBCF7F-B610-482E-A6E5-F1B7D13CA51D}

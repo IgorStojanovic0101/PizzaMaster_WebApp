@@ -11,9 +11,11 @@ namespace PizzaMaster.Application.Services
     public interface IAccountService
     {
          ServiceResponse<UserLoginResponseDTO> Login(UserLoginRequestDTO dto);
+         ServiceResponse<UserRegisterResponseDTO> Register(UserRegisterRequestDTO dto);
 
-         bool StoreToken(UserLoginResponseDTO responseDTO);
-         string GetRole(UserLoginResponseDTO responseDto);
+
+         bool StoreToken(string token);
+         string GetRole(string token);
 
     }
 }

@@ -16,7 +16,7 @@ namespace PizzaMaster.Infrastructure.System
 
 
             public const string Login = $"{prefs}/Login";
-            public const string Logout = $"{prefs}/Register";
+            public const string Register = $"{prefs}/Register";
             // Add more actions as needed
         }
         // Add more roles as needed

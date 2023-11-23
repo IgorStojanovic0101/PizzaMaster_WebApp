@@ -31,7 +31,7 @@ namespace PizzaMaster.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             var requestDTO = new UserLoginRequestDTO { Username = model.Username, Password = model.Password };
 
@@ -40,10 +40,8 @@ namespace PizzaMaster.App.Controllers
             if (!response.Validation)
             {
 
-                //string token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6Imlnb3IiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNjk5ODI3OTQ3fQ.mMVvc4FhHMzMaNm6fc3nGmkVYg3StGevDZCNbR-7GpI";
 
-
-               var tokenStored = this._accountService.StoreToken(response.Payload);
+               var tokenStored = this._accountService.StoreToken(response.Payload.Token);
                 if(!tokenStored)
                 {
                     _notyfService.Warning("Token was expired");
@@ -51,7 +49,7 @@ namespace PizzaMaster.App.Controllers
                 }
 
                
-                var role = this._accountService.GetRole(response.Payload);
+                var role = this._accountService.GetRole(response.Payload.Token);
 
                 if (role == "Admin")
                 {
@@ -79,11 +77,47 @@ namespace PizzaMaster.App.Controllers
             return View();
         }
 
+        public IActionResult LogOut(string returnUrl = null)
+        {
+            return RedirectToAction(nameof(Login), "Account");
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            var requestDTO = new UserRegisterRequestDTO { Username = model.Username, Password = model.Password, Email = model.Email, Name = model.FullName };
+
+            var response = this._accountService.Register(requestDTO);
+
+            if (response.Validation is true ) {
+
+                _notyfService.Warning($"Warning: {string.Join("\n- ", response.Errors)}");
+                return View(model);
+            }
+
+            var tokenStored = this._accountService.StoreToken(response.Payload.Token);
+            if (!tokenStored)
+            {
+                _notyfService.Warning("Token was expired");
+                return View(model);
+            }
+
+
+            var role = this._accountService.GetRole(response.Payload.Token);
+
+            if (role == "Admin")
+            {
+                return RedirectToAction("Index", "Home", new { area = "Admin" });
+
+            }
+            else if (role == "User")
+            {
+                return RedirectToAction("Index", "Home", new { area = "User" });
+            }
+
+
             return RedirectToAction("Index", "Home");
         }
     }

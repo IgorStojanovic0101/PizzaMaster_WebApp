@@ -24,15 +24,19 @@ namespace PizzaMaster.BusinessLogic.Services
             this._restClient = restClient;
             this._httpContextAccessor = httpContextAccessor;
         }
-        public ServiceResponse<UserLoginResponseDTO> Login(UserLoginRequestDTO dto) => _restClient.wsPost<ServiceResponse<UserLoginResponseDTO>, UserLoginRequestDTO>(SystemUrls.User.Login, dto); 
-        
+        public ServiceResponse<UserLoginResponseDTO> Login(UserLoginRequestDTO dto) => _restClient.wsPost<ServiceResponse<UserLoginResponseDTO>, UserLoginRequestDTO>(SystemUrls.User.Login, dto);
+
+        public ServiceResponse<UserRegisterResponseDTO> Register(UserRegisterRequestDTO dto) =>  _restClient.wsPost<ServiceResponse<UserRegisterResponseDTO>, UserRegisterRequestDTO>(SystemUrls.User.Register, dto,true);
+       
         
         
 
-        public bool StoreToken(UserLoginResponseDTO responseDto)
+
+
+        public bool StoreToken(string token)
         {
             var handler = new JwtSecurityTokenHandler();
-            var jsonToken = handler.ReadToken(responseDto.Token) as JwtSecurityToken;
+            var jsonToken = handler.ReadToken(token) as JwtSecurityToken;
 
             if (jsonToken != null)
             {
@@ -45,7 +49,7 @@ namespace PizzaMaster.BusinessLogic.Services
                     return false;
                 }
 
-                this._httpContextAccessor.HttpContext.Session.Set("Token",Encoding.UTF8.GetBytes(responseDto.Token));
+                this._httpContextAccessor.HttpContext.Session.Set("Token",Encoding.UTF8.GetBytes(token));
 
 
                 return true;
@@ -54,10 +58,10 @@ namespace PizzaMaster.BusinessLogic.Services
             return false;
         }
 
-        public string GetRole(UserLoginResponseDTO responseDto)
+        public string GetRole(string token)
         {
             var handler = new JwtSecurityTokenHandler();
-            var jsonToken = handler.ReadToken(responseDto.Token) as JwtSecurityToken;
+            var jsonToken = handler.ReadToken(token) as JwtSecurityToken;
 
             
             var roleClaim = jsonToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);

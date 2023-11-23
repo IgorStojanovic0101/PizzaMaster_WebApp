@@ -5,6 +5,8 @@ using System;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
+using PizzaMaster.Shared.DTOs.User;
+using System.Net.Http;
 
 namespace PizzaMaster.Infrastructure.System
 {
@@ -78,7 +80,7 @@ namespace PizzaMaster.Infrastructure.System
 
 
 
-        public Treturn wsPost<Treturn, Tmodel>(string requestUri, Tmodel value)
+        public Treturn wsPost<Treturn, Tmodel>(string requestUri, Tmodel value, bool multipartFormData = false)
         {
             HttpClientHandler clientHandler = new HttpClientHandler();
             clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
@@ -89,18 +91,57 @@ namespace PizzaMaster.Infrastructure.System
                 httpClient.Timeout = TimeSpan.FromSeconds(apiTimeoutSec);
                 httpClient.BaseAddress = new Uri(url);
 
-                byte[]? tokenBytes = _httpContextAccessor.HttpContext.Session.TryGetValue("Token", out byte[]? tempTokenBytes) ? tempTokenBytes : null;
-                string token = tokenBytes != null ? Encoding.UTF8.GetString(tokenBytes) : null;
-
-
+              
                 AddAuthorizationHeader(httpClient);
 
-
-                HttpResponseMessage response = httpClient.PostAsJsonAsync(requestUri, value).Result;
+                var response = PostRequest(httpClient,requestUri, value, multipartFormData);
 
                 var treturn = HandleResponse<Treturn>(response);
                 return treturn;
             }
+        }
+
+        private HttpResponseMessage PostRequest<T>(HttpClient httpClient, string requestUri, T value, bool multipartFormData)
+        {
+            HttpResponseMessage response;
+
+            if (multipartFormData)
+            {
+                var additionalFormData = ConvertValueToKeyValuePairs(value);
+                var formData = new MultipartFormDataContent();
+
+                foreach (var pair in additionalFormData)
+                {
+                    formData.Add(new StringContent(pair.Value), pair.Key);
+                }
+
+                response = httpClient.PostAsync(requestUri, formData).Result;
+            }
+            else
+            {
+                response = httpClient.PostAsJsonAsync(requestUri, value).Result;
+            }
+
+            return response;
+        }
+
+        public static List<KeyValuePair<string, string>> ConvertValueToKeyValuePairs<T>(T dto)
+        {
+            var properties = typeof(T).GetProperties();
+            var keyValuePairs = new List<KeyValuePair<string, string>>();
+
+            foreach (var property in properties)
+            {
+                var key = property.Name;
+                var value = property.GetValue(dto)?.ToString(); // Convert value to string
+
+                if (value != null)
+                {
+                    keyValuePairs.Add(new KeyValuePair<string, string>(key, value));
+                }
+            }
+
+            return keyValuePairs;
         }
         public async Task<Treturn> wsPostAsync<Treturn, Tmodel>(string requestUri, Tmodel value)
         {
