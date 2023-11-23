@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\PizzaMaster_WebAPI\New folder\PizzaMaster_NetCore\PizzaMaster.Shared\PizzaMaster.Shared.csproj" />
     <ProjectReference Include="..\..\..\PizzaMaster_WebAPI\PizzaMaster_NetCore\PizzaMaster.Shared\PizzaMaster.Shared.csproj" />
     <ProjectReference Include="..\PizzaMaster.Application\PizzaMaster.Application.csproj" />
     <ProjectReference Include="..\PizzaMaster.Domain\PizzaMaster.Domain.csproj" />

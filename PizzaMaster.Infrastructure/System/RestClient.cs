@@ -5,7 +5,6 @@ using System;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
-using PizzaMaster.Shared.DTOs.User;
 using System.Net.Http;
 
 namespace PizzaMaster.Infrastructure.System
