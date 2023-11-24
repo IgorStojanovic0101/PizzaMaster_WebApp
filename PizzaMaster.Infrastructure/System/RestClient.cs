@@ -18,23 +18,24 @@ namespace PizzaMaster.Infrastructure.System
         const int numSteps = 25;
         const double progressSec = 500;
 
-
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public RestClient(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _configuration = configuration;
-
             // Now you can access configuration values like this:
             this.url = _configuration["API_Url"];
             this.apiTimeoutSec = double.Parse(_configuration["API_Timeout"]);
             _httpContextAccessor = httpContextAccessor;
         }
 
+        #region GET
         public Treturn wsGet<Treturn>(string requestUri)
         {
-            using (HttpClient httpClient = new HttpClient())
+            var _clientHandler = new HttpClientHandler();
+            _clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            using (HttpClient httpClient = new HttpClient(_clientHandler))
             {
                 httpClient.Timeout = TimeSpan.FromSeconds(apiTimeoutSec);
                 httpClient.BaseAddress = new Uri(url);
@@ -53,8 +54,9 @@ namespace PizzaMaster.Infrastructure.System
         }
         public async Task<Treturn> wsGetAsync<Treturn>(string requestUri)
         {
-
-            using (HttpClient httpClient = new HttpClient())
+            var _clientHandler = new HttpClientHandler();
+            _clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            using (HttpClient httpClient = new HttpClient(_clientHandler))
             {
                 httpClient.Timeout = TimeSpan.FromSeconds(apiTimeoutSec);
                 httpClient.BaseAddress = new Uri(url);
@@ -62,29 +64,25 @@ namespace PizzaMaster.Infrastructure.System
 
                 AddAuthorizationHeader(httpClient);
 
-                try
-                {
-                    HttpResponseMessage response = await httpClient.GetAsync(requestUri);
-                    var treturn = await HandleResponseAsync<Treturn>(response);
+              
+                HttpResponseMessage response = await httpClient.GetAsync(requestUri);
+                var treturn = await HandleResponseAsync<Treturn>(response);
 
 
-                    return treturn;
-                }
-                finally
-                {
-
-                }
+                return treturn;
+               
             }
         }
 
-
+        #endregion
+        #region POST
 
         public Treturn wsPost<Treturn, Tmodel>(string requestUri, Tmodel value, bool multipartFormData = false)
         {
-            HttpClientHandler clientHandler = new HttpClientHandler();
-            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+             var _clientHandler = new HttpClientHandler();
+            _clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
 
-            using (HttpClient httpClient = new HttpClient(clientHandler))
+            using (HttpClient httpClient = new HttpClient(_clientHandler))
             {
 
                 httpClient.Timeout = TimeSpan.FromSeconds(apiTimeoutSec);
@@ -97,6 +95,32 @@ namespace PizzaMaster.Infrastructure.System
 
                 var treturn = HandleResponse<Treturn>(response);
                 return treturn;
+            }
+        }
+
+      
+
+        public async Task<Treturn> wsPostAsync<Treturn, Tmodel>(string requestUri, Tmodel value, bool multipartFormData = false)
+        {
+            var _clientHandler = new HttpClientHandler();
+            _clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+            using (HttpClient httpClient = new HttpClient(_clientHandler))
+            {
+
+                httpClient.Timeout = TimeSpan.FromSeconds(apiTimeoutSec);
+                httpClient.BaseAddress = new Uri(url);
+
+
+                AddAuthorizationHeader(httpClient);
+
+                var response = await PostRequestAsync(httpClient, requestUri, value, multipartFormData);
+                var treturn = await HandleResponseAsync<Treturn>(response);
+
+
+
+                return treturn;
+              
             }
         }
 
@@ -124,56 +148,39 @@ namespace PizzaMaster.Infrastructure.System
             return response;
         }
 
-        public static List<KeyValuePair<string, string>> ConvertValueToKeyValuePairs<T>(T dto)
+        private async Task<HttpResponseMessage> PostRequestAsync<T>(HttpClient httpClient, string requestUri, T value, bool multipartFormData)
         {
-            var properties = typeof(T).GetProperties();
-            var keyValuePairs = new List<KeyValuePair<string, string>>();
+            HttpResponseMessage response;
 
-            foreach (var property in properties)
+            if (multipartFormData)
             {
-                var key = property.Name;
-                var value = property.GetValue(dto)?.ToString(); // Convert value to string
+                var additionalFormData = ConvertValueToKeyValuePairs(value);
+                var formData = new MultipartFormDataContent();
 
-                if (value != null)
+                foreach (var pair in additionalFormData)
                 {
-                    keyValuePairs.Add(new KeyValuePair<string, string>(key, value));
+                    formData.Add(new StringContent(pair.Value), pair.Key);
                 }
+
+                response = await httpClient.PostAsync(requestUri, formData);
+            }
+            else
+            {
+                response = await httpClient.PostAsJsonAsync(requestUri, value);
             }
 
-            return keyValuePairs;
-        }
-        public async Task<Treturn> wsPostAsync<Treturn, Tmodel>(string requestUri, Tmodel value)
-        {
-
-            using (HttpClient httpClient = new HttpClient())
-            {
-
-                httpClient.Timeout = TimeSpan.FromSeconds(apiTimeoutSec);
-                httpClient.BaseAddress = new Uri(url);
-
-
-                AddAuthorizationHeader(httpClient);
-                try
-                {
-                    HttpResponseMessage response = await httpClient.PostAsJsonAsync(requestUri, value);
-                    var treturn = await HandleResponseAsync<Treturn>(response);
-
-
-
-                    return treturn;
-                }
-                finally
-                {
-
-                }
-            }
+            return response;
         }
 
+        #endregion
+        #region DELETE
         public Treturn wsDelete<Treturn, Tmodel>(string requestUri, Tmodel value)
         {
 
+            var _clientHandler = new HttpClientHandler();
+            _clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
 
-            using (HttpClient httpClient = new HttpClient())
+            using (HttpClient httpClient = new HttpClient(_clientHandler))
             {
                 httpClient.Timeout = TimeSpan.FromSeconds(apiTimeoutSec);
                 httpClient.BaseAddress = new Uri(url);
@@ -200,45 +207,41 @@ namespace PizzaMaster.Infrastructure.System
 
         public async Task<Treturn> wsDeleteAsync<Treturn, Tmodel>(string requestUri, Tmodel value)
         {
+            var _clientHandler = new HttpClientHandler();
+            _clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
 
-
-            using (HttpClient httpClient = new HttpClient())
+            using (HttpClient httpClient = new HttpClient(_clientHandler))
             {
                 httpClient.Timeout = TimeSpan.FromSeconds(apiTimeoutSec);
                 httpClient.BaseAddress = new Uri(url);
 
-                try
-                {
+              
 
-                    AddAuthorizationHeader(httpClient);
+                AddAuthorizationHeader(httpClient);
 
-                    string jsonData = JsonConvert.SerializeObject(value);
+                string jsonData = JsonConvert.SerializeObject(value);
 
-                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, requestUri);
-                    request.Content = new StringContent(jsonData, Encoding.UTF8, "application/json"); ;
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, requestUri);
+                request.Content = new StringContent(jsonData, Encoding.UTF8, "application/json"); ;
 
-                    HttpResponseMessage response = await httpClient.SendAsync(request);
+                HttpResponseMessage response = await httpClient.SendAsync(request);
 
-                    var treturn = await HandleResponseAsync<Treturn>(response);
+                var treturn = await HandleResponseAsync<Treturn>(response);
 
-
-
-                    return treturn;
-
-                }
-                finally
-                {
-
-                }
+                return treturn;   
 
             }
 
         }
 
-        public Treturn wsPut<Treturn, Tmodel>(string requestUri, Tmodel value)
-        {
+        #endregion
+        #region PUT
 
-            using (HttpClient httpClient = new HttpClient())
+        public Treturn wsPut<Treturn, Tmodel>(string requestUri, Tmodel value, bool multipartFormData = false)
+        {
+            var _clientHandler = new HttpClientHandler();
+            _clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            using (HttpClient httpClient = new HttpClient(_clientHandler))
             {
                 httpClient.Timeout = TimeSpan.FromSeconds(apiTimeoutSec);
                 httpClient.BaseAddress = new Uri(url);
@@ -246,45 +249,93 @@ namespace PizzaMaster.Infrastructure.System
 
                 AddAuthorizationHeader(httpClient);
 
-                // Serialize the data to JSON and create a StringContent
-                string jsonData = JsonConvert.SerializeObject(value);
-                StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-                // Send the PUT request with the data
-                HttpResponseMessage response = httpClient.PutAsync(requestUri, content).Result;
+                var response = PutRequest(httpClient, requestUri, value, multipartFormData);
 
                 var treturn = HandleResponse<Treturn>(response);
                 return treturn;
             }
         }
+        
 
-        public async Task<Treturn> wsPutAsync<Treturn, Tmodel>(string requestUri, Tmodel value)
+        public async Task<Treturn> wsPutAsync<Treturn, Tmodel>(string requestUri, Tmodel value, bool multipartFormData = false)
         {
-
-            using (HttpClient httpClient = new HttpClient())
+            var _clientHandler = new HttpClientHandler();
+            _clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            using (HttpClient httpClient = new HttpClient(_clientHandler))
             {
                 httpClient.Timeout = TimeSpan.FromSeconds(apiTimeoutSec);
                 httpClient.BaseAddress = new Uri(url);
 
 
                 AddAuthorizationHeader(httpClient);
-                try
-                {
-                    // Serialize the data to JSON and create a StringContent
-                    string jsonData = JsonConvert.SerializeObject(value);
-                    StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+              
+                var response = await PutRequestAsync(httpClient, requestUri, value, multipartFormData);
+                var treturn = await HandleResponseAsync<Treturn>(response);
 
-                    HttpResponseMessage response = await httpClient.PutAsync(requestUri, content);
-                    var treturn = await HandleResponseAsync<Treturn>(response);
-
-                    return treturn;
-                }
-                finally
-                {
-
-                }
+                return treturn;
+              
             }
         }
+
+        private HttpResponseMessage PutRequest<T>(HttpClient httpClient, string requestUri, T value, bool multipartFormData)
+        {
+            HttpResponseMessage response;
+
+            if (multipartFormData)
+            {
+                var additionalFormData = ConvertValueToKeyValuePairs(value);
+                var formData = new MultipartFormDataContent();
+
+                foreach (var pair in additionalFormData)
+                {
+                    formData.Add(new StringContent(pair.Value), pair.Key);
+                }
+
+                response = httpClient.PutAsync(requestUri, formData).Result;
+            }
+            else
+            {
+                // Serialize the data to JSON and create a StringContent
+                string jsonData = JsonConvert.SerializeObject(value);
+                StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+                response = httpClient.PutAsync(requestUri, content).Result;
+            }
+
+            return response;
+        }
+
+        private async Task<HttpResponseMessage> PutRequestAsync<T>(HttpClient httpClient, string requestUri, T value, bool multipartFormData)
+        {
+            HttpResponseMessage response;
+
+            if (multipartFormData)
+            {
+                var additionalFormData = ConvertValueToKeyValuePairs(value);
+                var formData = new MultipartFormDataContent();
+
+                foreach (var pair in additionalFormData)
+                {
+                    formData.Add(new StringContent(pair.Value), pair.Key);
+                }
+
+                response = await httpClient.PutAsync(requestUri, formData);
+            }
+            else
+            {
+                // Serialize the data to JSON and create a StringContent
+                string jsonData = JsonConvert.SerializeObject(value);
+                StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+                response = await httpClient.PutAsync(requestUri, content);
+            }
+
+            return response;
+        }
+
+        #endregion
+
+
 
         private Treturn HandleResponse<Treturn>(HttpResponseMessage response)
         {
@@ -353,6 +404,24 @@ namespace PizzaMaster.Infrastructure.System
             }
         }
 
+        private static List<KeyValuePair<string, string>> ConvertValueToKeyValuePairs<T>(T dto)
+        {
+            var properties = typeof(T).GetProperties();
+            var keyValuePairs = new List<KeyValuePair<string, string>>();
+
+            foreach (var property in properties)
+            {
+                var key = property.Name;
+                var value = property.GetValue(dto)?.ToString(); // Convert value to string
+
+                if (value != null)
+                {
+                    keyValuePairs.Add(new KeyValuePair<string, string>(key, value));
+                }
+            }
+
+            return keyValuePairs;
+        }
 
 
     }
