@@ -12,8 +12,4 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\PizzaMaster_WebAPI\PizzaMaster_NetCore\PizzaMaster.Shared\PizzaMaster.Shared.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -15,7 +15,7 @@ namespace PizzaMaster.Application.Services
 
 
          bool StoreToken(string token);
-         string GetRole(string token);
+         List<string> GetRoles(string token);
 
     }
 }

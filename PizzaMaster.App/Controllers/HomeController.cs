@@ -22,9 +22,10 @@ namespace PizzaMaster.App.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Error(string errorMessage)
         {
+            ViewBag.ErrorMessage = errorMessage;
+
             return View(new PizzaMaster.Domain.Models.ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }

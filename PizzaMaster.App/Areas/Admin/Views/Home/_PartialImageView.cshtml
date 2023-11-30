@@ -1,0 +1,15 @@
+﻿@model PizzaMaster.Domain.ViewModels.AdminViewModel
+
+<div>
+    <h2>Partial View 3</h2>
+
+    <h2>Image View</h2>
+
+
+    @if (!string.IsNullOrEmpty(Model.Image2))
+    {
+        <div>
+            <img src="@Url.Content(Model.Image2)" alt="Image 2" />
+        </div>
+    }
+</div>

@@ -19,6 +19,16 @@ namespace PizzaMaster.Infrastructure.System
             public const string Register = $"{prefs}/Register";
             // Add more actions as needed
         }
+
+        public static class Admin
+        {
+            private const string prefs = "Admin";
+
+            public const string SetAdminData = $"{prefs}/SetAdminData";
+
+            public const string AddVideo = $"{prefs}/AddVideo";
+
+        }
         // Add more roles as needed
     }
 }

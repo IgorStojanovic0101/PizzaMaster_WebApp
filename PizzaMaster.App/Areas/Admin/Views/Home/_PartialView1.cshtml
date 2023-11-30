@@ -1,0 +1,16 @@
+﻿
+<div>
+    <h2>Partial View 1</h2>
+    <form asp-action="UploadFile1" enctype="multipart/form-data" method="post">
+        <input type="file" name="file1" />
+        <button type="submit">Upload File 1</button>
+    </form>
+
+
+    @if (!string.IsNullOrEmpty(Model.Image1))
+    {
+        <div>
+            <img src="@Url.Content(Model.Image1)" alt="Image 1" style="max-width: 300px; max-height: 200px;" />
+        </div>
+    }
+</div>

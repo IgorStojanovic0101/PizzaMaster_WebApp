@@ -130,12 +130,26 @@ namespace PizzaMaster.Infrastructure.System
 
             if (multipartFormData)
             {
-                var additionalFormData = ConvertValueToKeyValuePairs(value);
                 var formData = new MultipartFormDataContent();
 
-                foreach (var pair in additionalFormData)
+                var properties = typeof(T).GetProperties();
+
+                foreach (var property in properties)
                 {
-                    formData.Add(new StringContent(pair.Value), pair.Key);
+                    if (property.PropertyType == typeof(IFormFile))
+                    {
+                        var formFile = (IFormFile)property.GetValue(value);
+
+                        if (formFile != null)
+                        {
+                            var fileContent = new ByteArrayContent(ReadStream(formFile.OpenReadStream()));
+                            formData.Add(fileContent, property.Name, formFile.FileName);
+                        }
+                    }
+                    else
+                    {
+                        formData.Add(new StringContent(property.GetValue(value)?.ToString() ?? string.Empty), property.Name);
+                    }
                 }
 
                 response = httpClient.PostAsync(requestUri, formData).Result;
@@ -147,19 +161,40 @@ namespace PizzaMaster.Infrastructure.System
 
             return response;
         }
-
+        private static byte[] ReadStream(Stream stream)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                stream.CopyTo(memoryStream);
+                return memoryStream.ToArray();
+            }
+        }
         private async Task<HttpResponseMessage> PostRequestAsync<T>(HttpClient httpClient, string requestUri, T value, bool multipartFormData)
         {
             HttpResponseMessage response;
 
             if (multipartFormData)
             {
-                var additionalFormData = ConvertValueToKeyValuePairs(value);
                 var formData = new MultipartFormDataContent();
 
-                foreach (var pair in additionalFormData)
+                var properties = typeof(T).GetProperties();
+
+                foreach (var property in properties)
                 {
-                    formData.Add(new StringContent(pair.Value), pair.Key);
+                    if (property.PropertyType == typeof(IFormFile))
+                    {
+                        var formFile = (IFormFile)property.GetValue(value);
+
+                        if (formFile != null)
+                        {
+                            var fileContent = new ByteArrayContent(ReadStream(formFile.OpenReadStream()));
+                            formData.Add(fileContent, property.Name, formFile.FileName);
+                        }
+                    }
+                    else
+                    {
+                        formData.Add(new StringContent(property.GetValue(value)?.ToString() ?? string.Empty), property.Name);
+                    }
                 }
 
                 response = await httpClient.PostAsync(requestUri, formData);
@@ -283,12 +318,26 @@ namespace PizzaMaster.Infrastructure.System
 
             if (multipartFormData)
             {
-                var additionalFormData = ConvertValueToKeyValuePairs(value);
                 var formData = new MultipartFormDataContent();
 
-                foreach (var pair in additionalFormData)
+                var properties = typeof(T).GetProperties();
+
+                foreach (var property in properties)
                 {
-                    formData.Add(new StringContent(pair.Value), pair.Key);
+                    if (property.PropertyType == typeof(IFormFile))
+                    {
+                        var formFile = (IFormFile)property.GetValue(value);
+
+                        if (formFile != null)
+                        {
+                            var fileContent = new ByteArrayContent(ReadStream(formFile.OpenReadStream()));
+                            formData.Add(fileContent, property.Name, formFile.FileName);
+                        }
+                    }
+                    else
+                    {
+                        formData.Add(new StringContent(property.GetValue(value)?.ToString() ?? string.Empty), property.Name);
+                    }
                 }
 
                 response = httpClient.PutAsync(requestUri, formData).Result;
@@ -311,12 +360,26 @@ namespace PizzaMaster.Infrastructure.System
 
             if (multipartFormData)
             {
-                var additionalFormData = ConvertValueToKeyValuePairs(value);
                 var formData = new MultipartFormDataContent();
 
-                foreach (var pair in additionalFormData)
+                var properties = typeof(T).GetProperties();
+
+                foreach (var property in properties)
                 {
-                    formData.Add(new StringContent(pair.Value), pair.Key);
+                    if (property.PropertyType == typeof(IFormFile))
+                    {
+                        var formFile = (IFormFile)property.GetValue(value);
+
+                        if (formFile != null)
+                        {
+                            var fileContent = new ByteArrayContent(ReadStream(formFile.OpenReadStream()));
+                            formData.Add(fileContent, property.Name, formFile.FileName);
+                        }
+                    }
+                    else
+                    {
+                        formData.Add(new StringContent(property.GetValue(value)?.ToString() ?? string.Empty), property.Name);
+                    }
                 }
 
                 response = await httpClient.PutAsync(requestUri, formData);
@@ -404,24 +467,7 @@ namespace PizzaMaster.Infrastructure.System
             }
         }
 
-        private static List<KeyValuePair<string, string>> ConvertValueToKeyValuePairs<T>(T dto)
-        {
-            var properties = typeof(T).GetProperties();
-            var keyValuePairs = new List<KeyValuePair<string, string>>();
-
-            foreach (var property in properties)
-            {
-                var key = property.Name;
-                var value = property.GetValue(dto)?.ToString(); // Convert value to string
-
-                if (value != null)
-                {
-                    keyValuePairs.Add(new KeyValuePair<string, string>(key, value));
-                }
-            }
-
-            return keyValuePairs;
-        }
+       
 
 
     }

@@ -49,14 +49,14 @@ namespace PizzaMaster.App.Controllers
                 }
 
                
-                var role = this._accountService.GetRole(response.Payload.Token);
+                var roles = this._accountService.GetRoles(response.Payload.Token);
 
-                if (role == "Admin")
+                if (roles.Contains("Admin"))
                 {
                     return RedirectToAction("Index", "Home", new { area = "Admin" });
 
                 }
-                else if (role == "User")
+                if (roles.Contains("User"))
                 {
                     return RedirectToAction("Index", "Home", new { area = "User" });
                 }
@@ -105,14 +105,14 @@ namespace PizzaMaster.App.Controllers
             }
 
 
-            var role = this._accountService.GetRole(response.Payload.Token);
+            var roles = this._accountService.GetRoles(response.Payload.Token);
 
-            if (role == "Admin")
+            if (roles.Contains("Admin"))
             {
                 return RedirectToAction("Index", "Home", new { area = "Admin" });
 
             }
-            else if (role == "User")
+            else if (roles.Contains("User"))
             {
                 return RedirectToAction("Index", "Home", new { area = "User" });
             }

@@ -43,9 +43,13 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 // Scoped registration
 builder.Services.AddScoped<ISomeService, SomeService>();
 
+builder.Services.AddScoped<IAdminService, AdminService>();
 
 //builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 var app = builder.Build();
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
+
 
 // Get the service provider from the builder
 //using (var scope = app.Services.CreateScope())

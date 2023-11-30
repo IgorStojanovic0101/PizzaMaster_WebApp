@@ -58,16 +58,16 @@ namespace PizzaMaster.BusinessLogic.Services
             return false;
         }
 
-        public string GetRole(string token)
+        public List<string> GetRoles(string token)
         {
             var handler = new JwtSecurityTokenHandler();
             var jsonToken = handler.ReadToken(token) as JwtSecurityToken;
 
             
-            var roleClaim = jsonToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+            var roleClaims = jsonToken.Claims.Where(c => c.Type == ClaimTypes.Role).Select(x=>x.Value).ToList();
 
               
-            return roleClaim.Value;
+            return roleClaims;
          
         }
     }
